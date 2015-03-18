@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>54BE3DCE-22BD-4F2F-A732-AC4D59DA925F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Core</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2e0879da-a595-40fd-814d-713af977dea0</key>
+		<string>http://code.taobao.org/svn/GenerateHMCode</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>trunk/Core.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2e0879da-a595-40fd-814d-713af977dea0</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2e0879da-a595-40fd-814d-713af977dea0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2e0879da-a595-40fd-814d-713af977dea0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>GenerateHMCode</string>
+		</dict>
+	</array>
+</dict>
+</plist>
