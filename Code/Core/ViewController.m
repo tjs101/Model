@@ -48,6 +48,9 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 @property (nonatomic, strong) NSMutableArray *typeItems;
 @property (nonatomic, strong) NSMutableArray *parameterItems;
 
+@property (nonatomic, strong) NSMutableArray *urlItems;//NSURL参数
+@property (nonatomic, strong) NSMutableArray *timeItems;//时间参数
+
 @property (nonatomic, strong) FileItem  *fileItem;
 
 @end
@@ -55,6 +58,8 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 @implementation ViewController
 @synthesize typeItems;
 @synthesize parameterItems;
+@synthesize urlItems;
+@synthesize timeItems;
 
 @synthesize fileItem;
 
@@ -79,6 +84,8 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     
     self.typeItems = [NSMutableArray array];
     self.parameterItems = [NSMutableArray array];
+    self.urlItems = [NSMutableArray array];
+    self.timeItems = [NSMutableArray array];
     
     self.fileItem = [[FileItem alloc] init];
     
@@ -158,6 +165,8 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     
     [self.typeItems removeAllObjects];
     [self.parameterItems removeAllObjects];
+    [self.urlItems removeAllObjects];
+    [self.timeItems removeAllObjects];
 }
 
 #pragma mark - on click
@@ -403,47 +412,58 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         NSString *decorder;//decorder
         NSString *coder;//coder
         NSString *function;//function
-        NSString *value;
         
-        if ([attribute isEqualToString:@"NSURL"] || [attribute isEqualToString:@"NSString"] || [attribute isEqualToString:@"NSArray"] || [attribute isEqualToString:@"NSDictionary"] || [attribute isEqualToString:@"NSNumber"] || [attribute isEqualToString:@"NSObject"] || [attribute isEqualToString:@"id"]) {
+        if ([attribute isEqualToString:@"NSURL"]) {
+            [self.urlItems addObject:parameter];
+        }
+        
+        if ([attribute isEqualToString:@"NSURL"] || [attribute isEqualToString:@"NSString"] || [attribute isEqualToString:@"NSArray"] || [attribute isEqualToString:@"NSDictionary"] || [attribute isEqualToString:@"NSNumber"] || [attribute isEqualToString:@"NSObject"]) {
             contentH = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ *%@;",attribute,parameter];
             
         }
         
-        if ([attribute isEqualToString:@"BOOL"] || [attribute isEqualToString:@"NSInteger"]) {
+        if ([attribute isEqualToString:@"id"]) {
+            contentH = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ %@;",attribute,parameter];
+        }
+        
+        if ([attribute isEqualToString:@"NSTimeInterval"]) {
+            [self.timeItems addObject:parameter];
+        }
+        
+        if ([attribute isEqualToString:@"BOOL"] || [attribute isEqualToString:@"NSInteger"] || [attribute isEqualToString:@"double"] || [attribute isEqualToString:@"float"] || [attribute isEqualToString:@"NSUInteger"] || [attribute isEqualToString:@"NSTimeInterval"]) {
             contentH = [NSString stringWithFormat:@"@property (nonatomic, assign) %@ %@;",attribute,parameter];
         }
         
         contentM = [NSString stringWithFormat:@"@synthesize %@;",parameter];
         
-        if (_functionStr.length == 0) {
-            value = @"id value";
-        }
-        else {
-            value = @"value";
-        }
         
         if ([attribute isEqualToString:@"BOOL"]) {
             decorder = [NSString stringWithFormat:@"        self.%@ = [aDecoder decodeBoolForKey:@\"%@\"];",parameter,parameter];
             coder = [NSString stringWithFormat:@"       [aCoder encodeBool:self.%@ forKey:@\"%@\"];",parameter,parameter];
-            function = [NSString stringWithFormat:@"     %@ = [dict objectForKey:@\"%@\"];\n     if ([value isKindOfClass:[NSString class]]) {\n         self.%@ = [value boolValue];\n      }",value,parameter,parameter];
         }
-        else if ([attribute isEqualToString:@"NSInteger"]) {
+        else if ([attribute isEqualToString:@"NSInteger"] || [attribute isEqualToString:@"NSUInteger"]) {
             decorder = [NSString stringWithFormat:@"        self.%@ = [aDecoder decodeIntegerForKey:@\"%@\"];",parameter,parameter];
             coder = [NSString stringWithFormat:@"       [aCoder encodeInteger:self.%@ forKey:@\"%@\"];",parameter,parameter];
-            function = [NSString stringWithFormat:@"     %@ = [dict objectForKey:@\"%@\"];\n     if ([value isKindOfClass:[NSString class]]) {\n         self.%@ = [value integerValue];\n      }",value,parameter,parameter];
         }
         else if ([attribute isEqualToString:@"NSString"] || [attribute isEqualToString:@"NSNumber"] || [attribute isEqualToString:@"NSArray"] || [attribute isEqualToString:@"NSDictionary"] || [attribute isEqualToString:@"NSObject"] || [attribute isEqualToString:@"id"]) {
             decorder = [NSString stringWithFormat:@"        self.%@ = [aDecoder decodeObjectForKey:@\"%@\"];",parameter,parameter];
             coder = [NSString stringWithFormat:@"       [aCoder encodeObject:self.%@ forKey:@\"%@\"];",parameter,parameter];
-            function = [NSString stringWithFormat:@"     %@ = [dict objectForKey:@\"%@\"];\n     if ([value isKindOfClass:[NSString class]]) {\n         self.%@ = value;\n      }",value,parameter,parameter];
         }
         else if ([attribute isEqualToString:@"NSURL"]) {
             decorder = [NSString stringWithFormat:@"        self.%@ = [NSURL URLWithString:[aDecoder decodeObjectForKey:@\"%@\"]];",parameter,parameter];
             coder = [NSString stringWithFormat:@"       [aCoder encodeObject:self.%@.absoluteString forKey:@\"%@\"];",parameter,parameter];
-            function = [NSString stringWithFormat:@"     %@ = [dict objectForKey:@\"%@\"];\n     if ([value isKindOfClass:[NSString class]]) {\n         self.%@ = [NSURL URLWithString:value];\n      }",value,parameter,parameter];
+        }
+        else if ([attribute isEqualToString:@"double"] || [attribute isEqualToString:@"NSTimeInterval"]) {
+            decorder = [NSString stringWithFormat:@"        self.%@ = [aDecoder decodeDoubleForKey:@\"%@\"];",parameter,parameter];
+            coder = [NSString stringWithFormat:@"       [aCoder encodeDouble:self.%@ forKey:@\"%@\"];",parameter,parameter];
+        }
+        else if ([attribute isEqualToString:@"float"]) {
+            decorder = [NSString stringWithFormat:@"        self.%@ = [aDecoder decodeFloatForKey:@\"%@\"];",parameter,parameter];
+            coder = [NSString stringWithFormat:@"       [aCoder encodeFloat:self.%@ forKey:@\"%@\"];",parameter,parameter];
         }
         
+        function = @"       [self setValuesForKeysWithDictionary:dict];\n}";
+    
         //h文件
         if (_parameterHStr.length == 0) {
             _parameterHStr = contentH;
@@ -476,13 +496,50 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
             _coderStr = [NSString stringWithFormat:@"%@\n%@",_coderStr,coder];
         }
         
+        //keyFunction
+        NSString *keyFunction = nil;
+        
+        if ([self.urlItems count] == 0 && [self.timeItems count] == 0) {//不存在NSURL和NSTimeInterval类型参数
+            
+            keyFunction = @"- (void)setValue:(id)value forKey:(NSString *)key\n{\n       [super setValue:value forKey:key];\n}";
+            
+        } else {
+            
+            NSMutableString *urlParStr = [NSMutableString string];
+            
+            for (NSString *urlPar in self.urlItems) {
+                
+                if (urlParStr.length == 0) {
+                    NSString *par = [NSString stringWithFormat:@"\n     if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [NSURL URLWithString:value];\n    }",urlPar,urlPar];
+                    [urlParStr appendString:par];
+                }
+                else {
+                    NSString *par = [NSString stringWithFormat:@"\n    else if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [NSURL URLWithString:value];\n    }",urlPar,urlPar];
+                    [urlParStr appendString:par];
+                }
+            }
+            
+            for (NSString *urlPar in self.timeItems) {
+                
+                if (urlParStr.length == 0) {
+                    NSString *par = [NSString stringWithFormat:@"\n     if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [value doubleValue]/1000;\n    }",urlPar,urlPar];
+                    [urlParStr appendString:par];
+                }
+                else {
+                    NSString *par = [NSString stringWithFormat:@"\n    else if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [value doubleValue]/1000;\n    }",urlPar,urlPar];
+                    [urlParStr appendString:par];
+                }
+            }
+            
+            keyFunction = [NSString stringWithFormat:@"- (void)setValue:(id)value forKey:(NSString *)key\n{%@ else {\n          [super setValue:value forKey:key];\n    }\n}",urlParStr];
+            
+        }
+        
+        //undefinedKeyFunction
+        NSString *undefinedKeyFunction = @"- (void)setValue:(id)value forUndefinedKey:(NSString *)key\n\{\n         NSLog(@\"%s中不存在%@键值\",__FILE__,key);";
+        
         //function
-        if (_functionStr.length == 0) {
-            _functionStr = function;
-        }
-        else {
-            _functionStr = [NSString stringWithFormat:@"%@\n\n%@",_functionStr,function];
-        }
+        _functionStr = [NSString stringWithFormat:@"%@\n\n%@\n\n%@",function,keyFunction,undefinedKeyFunction];
         
         [self refreshFileHeader];
 
