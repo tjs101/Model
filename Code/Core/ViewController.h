@@ -23,7 +23,8 @@
 @property (nonatomic, weak)  IBOutlet NSTextField *mHeaderLabel;
 @property (nonatomic, weak)  IBOutlet NSButton *editButton;
 
-@property (nonatomic, weak)  IBOutlet NSButton *checkButon;
+@property (nonatomic, weak)  IBOutlet NSButton *checkButon;//是否添加获取数据方法
+@property (nonatomic, weak)  IBOutlet NSButton *codingButton;//是否coding
 
 - (IBAction)onAddClick:(id)sender;//增加
 - (IBAction)onGenerateClick:(id)sender;//生成

@@ -42,7 +42,9 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     NSString *_hHeaderStr;
     NSString *_mHeaderStr;
     
-    BOOL _checkOnState;//选中状态,
+    BOOL _checkOnState;//选中状态,(是否获取数据方法)
+    BOOL _codingState;//是否coding协议
+    
 }
 
 @property (nonatomic, strong) NSMutableArray *typeItems;
@@ -75,6 +77,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 @synthesize mHeaderLabel = _mHeaderLabel;
 @synthesize editButton;
 @synthesize checkButon;
+@synthesize codingButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -110,6 +113,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     _contentHTextField.editable = NO;
     
     _checkOnState = checkButon.state;
+    _codingState = codingButton.state;
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -189,7 +193,8 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 
 - (IBAction)onCheckClick:(id)sender
 {
-    _checkOnState = ((NSButton *)sender).state;
+    _checkOnState = checkButon.state;
+    _codingState = codingButton.state;
     
     NSArray *aTypeItems = [NSArray arrayWithArray:self.typeItems];
     NSArray *aParameterItems = [NSArray arrayWithArray:self.parameterItems];
@@ -371,7 +376,14 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     _mHeaderStr = [self headerWithType:@"m"];
     
     //h文件
-    _interfaceHStr = [NSString stringWithFormat:@"#import <Foundation/Foundation.h>\n\n@interface %@ : NSObject <NSCoding>\n",_fileNameTextField.stringValue];
+    
+    if (_codingState) {
+        _interfaceHStr = [NSString stringWithFormat:@"#import <Foundation/Foundation.h>\n\n@interface %@ : NSObject <NSCoding>\n",_fileNameTextField.stringValue];
+    }
+    else {
+        _interfaceHStr = [NSString stringWithFormat:@"#import <Foundation/Foundation.h>\n\n@interface %@ : NSObject\n",_fileNameTextField.stringValue];
+    }
+
     
     if (_checkOnState) {
         _contentHTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n%@\n\n%@;\n\n@end",_hHeaderStr,_interfaceHStr,_parameterHStr,_functionNameStr];
@@ -387,14 +399,26 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     NSString *coderStr = [NSString stringWithFormat:@"%@\n%@\n%@",_coderHeaderMStr,_coderStr,_coderFooterMStr];
     
     _interfaceMStr = [NSString stringWithFormat:@"#import \"%@.h\"\n\n@implementation %@",_fileNameTextField.stringValue,_fileNameTextField.stringValue];
+    
+    if (_codingState) {
 
-    if (_checkOnState) {
-        _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,functionStr,@"@end"];
+        if (_checkOnState) {
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,functionStr,@"@end"];
+        }
+        else {
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,@"@end"];
+        }
     }
     else {
-        _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,@"@end"];
+        
+        if (_checkOnState) {
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,functionStr,@"@end"];
+        }
+        else {
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,@"@end"];
+        }
     }
-    
+
 }
 
 //修改内容
