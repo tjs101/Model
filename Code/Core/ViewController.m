@@ -536,10 +536,13 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         }
         
         //undefinedKeyFunction
-        NSString *undefinedKeyFunction = @"- (void)setValue:(id)value forUndefinedKey:(NSString *)key\n\{\n         NSLog(@\"%s中不存在%@键值\",__FILE__,key);";
+        NSString *undefinedKeyFunction = @"- (void)setValue:(id)value forUndefinedKey:(NSString *)key\n\{\n         NSLog(@\"%s中不存在%@键值\",__FILE__,key);\n}";
+        
+        //nilValue
+        NSString *nilValueKey = @"- (void)setNilValueForKey:(NSString *)key\n{\n      NSLog(@\"%@值为空\",key);\n}\n\n";
         
         //function
-        _functionStr = [NSString stringWithFormat:@"%@\n\n%@\n\n%@",function,keyFunction,undefinedKeyFunction];
+        _functionStr = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@",function,keyFunction,undefinedKeyFunction,nilValueKey];
         
         [self refreshFileHeader];
 
