@@ -12,7 +12,7 @@
 #import "FileItem.h"
 #import "PathManager.h"
 
-#define kDefaultFileName @"ItemModel"
+#define kDefaultFileName @"TJSModel"
 
 NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotification";
 
@@ -36,14 +36,14 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     NSString *_functionNameStr;
     NSString *_functionHeaderStr;
     NSString *_functionStr;
-    NSString *_functionFooterStr;
-    
     
     NSString *_hHeaderStr;
     NSString *_mHeaderStr;
     
     BOOL _checkOnState;//选中状态,(是否获取数据方法)
     BOOL _codingState;//是否coding协议
+    
+    BOOL _baseClass;//是否为基类
     
 }
 
@@ -78,6 +78,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 @synthesize editButton;
 @synthesize checkButon;
 @synthesize codingButton;
+@synthesize baseClassButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -107,13 +108,14 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     
     //function
     _functionHeaderStr = [NSString stringWithFormat:@"%@\n{",_functionNameStr];
-    _functionFooterStr = @"}";
     
     _contentMTextField.editable = NO;
     _contentHTextField.editable = NO;
     
     _checkOnState = checkButon.state;
     _codingState = codingButton.state;
+    _baseClass = baseClassButton.state;
+
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -195,6 +197,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 {
     _checkOnState = checkButon.state;
     _codingState = codingButton.state;
+    _baseClass = baseClassButton.state;
     
     NSArray *aTypeItems = [NSArray arrayWithArray:self.typeItems];
     NSArray *aParameterItems = [NSArray arrayWithArray:self.parameterItems];
@@ -232,17 +235,18 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
 {
     
     if ([_parameterTextField.stringValue stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0) {
-        
+            
         _parameterTextField.stringValue = @"";
         [_parameterTextField resignFirstResponder];
-        
+            
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:@"参数不能为空!"];
         [alert addButtonWithTitle:@"OK"];
         [alert runModal];
-        
+            
         return;
     }
+
     
     if ([self.parameterItems containsObject:[NSString stringWithFormat:@"%@",_parameterTextField.stringValue]]) {
         
@@ -252,9 +256,10 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         [alert runModal];
         return;
     }
-    
+
     [self.typeItems addObject:_aComboBox.stringValue];
     [self.parameterItems addObject:_parameterTextField.stringValue];
+    
     
     NSArray *aTypeItems = [NSArray arrayWithArray:self.typeItems];
     NSArray *aParameterItems = [NSArray arrayWithArray:self.parameterItems];
@@ -375,35 +380,45 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     _hHeaderStr = [self headerWithType:@"h"];
     _mHeaderStr = [self headerWithType:@"m"];
     
-    //h文件
     
+    //m文件
+    
+    NSString *functionStr = [NSString stringWithFormat:@"%@\n%@",_functionHeaderStr,_functionStr];
+    NSString *decoderStr = [NSString stringWithFormat:@"%@\n%@\n%@",_decoderHeaderMStr,_decoderStr,_decoderFooterMStr];
+    NSString *coderStr = [NSString stringWithFormat:@"%@\n%@\n%@",_coderHeaderMStr,_coderStr,_coderFooterMStr];
+    
+    _interfaceMStr = [NSString stringWithFormat:@"#import \"%@.h\"\n\n@implementation %@",_fileNameTextField.stringValue,_fileNameTextField.stringValue];
+    
+    //h文件
     if (_codingState) {
         _interfaceHStr = [NSString stringWithFormat:@"#import <Foundation/Foundation.h>\n\n@interface %@ : NSObject <NSCoding>\n",_fileNameTextField.stringValue];
     }
     else {
         _interfaceHStr = [NSString stringWithFormat:@"#import <Foundation/Foundation.h>\n\n@interface %@ : NSObject\n",_fileNameTextField.stringValue];
     }
-
     
-    if (_checkOnState) {
+    
+    if (_checkOnState && _baseClass) {
         _contentHTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n%@\n\n%@;\n\n@end",_hHeaderStr,_interfaceHStr,_parameterHStr,_functionNameStr];
+    }
+    else  if (_checkOnState) {
+        _contentHTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n%@\n\n%@;\n\n@end",_hHeaderStr,_interfaceHStr,_parameterHStr,_functionNameStr];
+    }
+    else if (_baseClass) {
+        _contentHTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n%@;\n\n@end",_hHeaderStr,_interfaceHStr,_parameterHStr];
     }
     else {
         _contentHTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n%@\n\n@end",_hHeaderStr,_interfaceHStr,_parameterHStr];
     }
     
     //m文件
-    
-    NSString *functionStr = [NSString stringWithFormat:@"%@\n%@\n%@",_functionHeaderStr,_functionStr,_functionFooterStr];
-    NSString *decoderStr = [NSString stringWithFormat:@"%@\n%@\n%@",_decoderHeaderMStr,_decoderStr,_decoderFooterMStr];
-    NSString *coderStr = [NSString stringWithFormat:@"%@\n%@\n%@",_coderHeaderMStr,_coderStr,_coderFooterMStr];
-    
-    _interfaceMStr = [NSString stringWithFormat:@"#import \"%@.h\"\n\n@implementation %@",_fileNameTextField.stringValue,_fileNameTextField.stringValue];
-    
     if (_codingState) {
-
-        if (_checkOnState) {
-            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,functionStr,@"@end"];
+        
+        if (_checkOnState) {//获取
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,functionStr,@"@end"];
+        }
+        else if (_baseClass) {//基类
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,_functionStr,@"@end"];
         }
         else {
             _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,decoderStr,coderStr,@"@end"];
@@ -412,7 +427,10 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     else {
         
         if (_checkOnState) {
-            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,functionStr,@"@end"];
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@%@",_mHeaderStr,_interfaceMStr,_parameterMStr,functionStr,@"@end"];
+        }
+        else if (_baseClass) {
+            _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@%@",_mHeaderStr,_interfaceMStr,_parameterMStr,_functionStr,@"@end"];
         }
         else {
             _contentMTextField.string = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@",_mHeaderStr,_interfaceMStr,_parameterMStr,@"@end"];
@@ -503,7 +521,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         else {
             _parameterMStr = [NSString stringWithFormat:@"%@\n%@",_parameterMStr,contentM];
         }
-        
+
         //decoder
         if (_decoderStr.length == 0) {
             _decoderStr = decorder;
@@ -523,50 +541,106 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         //keyFunction
         NSString *keyFunction = nil;
         
-        if ([self.urlItems count] == 0 && [self.timeItems count] == 0) {//不存在NSURL和NSTimeInterval类型参数
-            
-            keyFunction = @"- (void)setValue:(id)value forKey:(NSString *)key\n{\n       [super setValue:value forKey:key];\n}";
-            
-        } else {
-            
-            NSMutableString *urlParStr = [NSMutableString string];
-            
-            for (NSString *urlPar in self.urlItems) {
-                
-                if (urlParStr.length == 0) {
-                    NSString *par = [NSString stringWithFormat:@"\n     if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [NSURL URLWithString:value];\n    }",urlPar,urlPar];
-                    [urlParStr appendString:par];
-                }
-                else {
-                    NSString *par = [NSString stringWithFormat:@"\n    else if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [NSURL URLWithString:value];\n    }",urlPar,urlPar];
-                    [urlParStr appendString:par];
-                }
-            }
-            
-            for (NSString *urlPar in self.timeItems) {
-                
-                if (urlParStr.length == 0) {
-                    NSString *par = [NSString stringWithFormat:@"\n     if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [value doubleValue]/1000;\n    }",urlPar,urlPar];
-                    [urlParStr appendString:par];
-                }
-                else {
-                    NSString *par = [NSString stringWithFormat:@"\n    else if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [value doubleValue]/1000;\n    }",urlPar,urlPar];
-                    [urlParStr appendString:par];
-                }
-            }
-            
-            keyFunction = [NSString stringWithFormat:@"- (void)setValue:(id)value forKey:(NSString *)key\n{%@ else {\n          [super setValue:value forKey:key];\n    }\n}",urlParStr];
-            
-        }
-        
         //undefinedKeyFunction
-        NSString *undefinedKeyFunction = @"- (void)setValue:(id)value forUndefinedKey:(NSString *)key\n\{\n         NSLog(@\"%s中不存在%@键值\",__FILE__,key);\n}";
+        NSString *undefinedKeyFunction = nil;
         
         //nilValue
-        NSString *nilValueKey = @"- (void)setNilValueForKey:(NSString *)key\n{\n      NSLog(@\"%@值为空\",key);\n}\n\n";
+        NSString *nilValueKey = nil;
         
-        //function
-        _functionStr = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@",function,keyFunction,undefinedKeyFunction,nilValueKey];
+        if (_checkOnState) {
+
+            if ([self.urlItems count] == 0 && [self.timeItems count] == 0) {//不存在NSURL和NSTimeInterval类型参数
+                
+                keyFunction = @"- (void)setValue:(id)value forKey:(NSString *)key\n{\n       [super setValue:value forKey:key];\n}";
+                
+            } else {
+                
+                NSMutableString *urlParStr = [NSMutableString string];
+                
+                for (NSString *urlPar in self.urlItems) {
+                    
+                    if (urlParStr.length == 0) {
+                        NSString *par = [NSString stringWithFormat:@"\n     if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [NSURL URLWithString:value];\n    }",urlPar,urlPar];
+                        [urlParStr appendString:par];
+                    }
+                    else {
+                        NSString *par = [NSString stringWithFormat:@"\n    else if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [NSURL URLWithString:value];\n    }",urlPar,urlPar];
+                        [urlParStr appendString:par];
+                    }
+                }
+                
+                for (NSString *urlPar in self.timeItems) {
+                    
+                    if (urlParStr.length == 0) {
+                        NSString *par = [NSString stringWithFormat:@"\n     if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [value doubleValue]/1000;\n    }",urlPar,urlPar];
+                        [urlParStr appendString:par];
+                    }
+                    else {
+                        NSString *par = [NSString stringWithFormat:@"\n    else if ([key isEqualToString:@\"%@\"]) {\n          self.%@ = [value doubleValue]/1000;\n    }",urlPar,urlPar];
+                        [urlParStr appendString:par];
+                    }
+                }
+                
+                keyFunction = [NSString stringWithFormat:@"- (void)setValue:(id)value forKey:(NSString *)key\n{%@ else {\n          [super setValue:value forKey:key];\n    }\n}",urlParStr];
+                
+            }
+            
+            //undefinedKeyFunction
+            undefinedKeyFunction = @"- (void)setValue:(id)value forUndefinedKey:(NSString *)key\n\{\n         NSLog(@\"%s中不存在%@键值\",__FILE__,key);\n}";
+            
+            //nilValue
+            nilValueKey = @"- (void)setNilValueForKey:(NSString *)key\n{\n      NSLog(@\"%@值为空\",key);\n}\n\n";
+        }
+
+        //文件描述
+        NSString *descriptionStr = nil;
+        
+        if (_baseClass) {//是否基类
+            
+            descriptionStr = @"- (NSDictionary *)properties\
+            \n{\
+                \n      NSMutableDictionary *dict = [NSMutableDictionary dictionary];\
+                \n\
+                \n      unsigned int count;\
+                \n\
+                \n      objc_property_t *properties = class_copyPropertyList([self class], &count);\
+                \n\
+                \n      for (int index = 0; index < count; index ++) {\
+                \n\
+                \n          objc_property_t property = properties[index];\
+                \n          const char *char_name = property_getName(property);//获取属性名\
+                \n          NSString *propertyName = [NSString stringWithUTF8String:char_name];\
+                \n\
+                \n          id propertyValue = [self valueForKey:propertyName];//属性值\
+                \n          if (propertyValue) {\
+                \n              [dict setObject:propertyValue forKey:propertyName];\
+                \n          }\
+                \n      }\
+                \n      free(properties);\
+                \
+                \n      return dict;\
+            \n}\
+            \n\
+            \n- (NSString *)description\
+            \n{\
+            \n      return [[self properties] description];\
+            \n}\n\n";
+            
+
+        }
+
+        if (_checkOnState && _baseClass) {
+            //function
+            _functionStr = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\%@",function,keyFunction,undefinedKeyFunction,nilValueKey,descriptionStr];
+        }
+        else if (_checkOnState) {
+            //function
+            _functionStr = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@",function,keyFunction,undefinedKeyFunction,nilValueKey];
+        }
+        else if (_baseClass) {
+            //function
+            _functionStr = [NSString stringWithFormat:@"%@",descriptionStr];
+        }
         
         [self refreshFileHeader];
 

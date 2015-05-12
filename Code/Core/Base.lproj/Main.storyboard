@@ -155,17 +155,17 @@
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v3j-ai-jq0">
-                                <rect key="frame" x="219" y="505" width="82" height="32"/>
+                                <rect key="frame" x="219" y="505" width="66" height="32"/>
                                 <buttonCell key="cell" type="push" title="增加" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qd4-Ew-PSE">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" size="13" name="STHeitiSC-Light"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onAddClick:" target="rPt-NT-nkU" id="0jb-rO-jda"/>
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JqP-8x-0Sp">
-                                <rect key="frame" x="732" y="510" width="79" height="22"/>
+                                <rect key="frame" x="726" y="510" width="79" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Item" placeholderString="文件名" drawsBackground="YES" id="BxC-ho-YYI">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -214,8 +214,8 @@
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cc5-rx-9gp">
-                                <rect key="frame" x="526" y="504" width="82" height="32"/>
-                                <buttonCell key="cell" type="push" title="重置内容" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eDQ-co-2Tw">
+                                <rect key="frame" x="534" y="504" width="66" height="32"/>
+                                <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eDQ-co-2Tw">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -223,14 +223,6 @@
                                     <action selector="onResetClick:" target="rPt-NT-nkU" id="dgV-PD-atY"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-ci-S98">
-                                <rect key="frame" x="20" y="482" width="370" height="23"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Item.h" id="HXj-sV-GUl">
-                                    <font key="font" metaFont="system" size="16"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hls-cb-Hyc">
                                 <rect key="frame" x="410" y="482" width="370" height="23"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Item.m" id="Ogv-an-ulV">
@@ -240,7 +232,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vZP-lp-5NM">
-                                <rect key="frame" x="466" y="504" width="60" height="32"/>
+                                <rect key="frame" x="474" y="504" width="60" height="32"/>
                                 <buttonCell key="cell" type="push" title="修改" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SoV-gE-msW">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -250,7 +242,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ip-Lf-Iq3">
-                                <rect key="frame" x="667" y="503" width="63" height="32"/>
+                                <rect key="frame" x="659" y="504" width="63" height="32"/>
                                 <buttonCell key="cell" type="push" title="历史" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Jh-qh-lGg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -260,7 +252,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TUz-Kx-cQO">
-                                <rect key="frame" x="608" y="504" width="59" height="32"/>
+                                <rect key="frame" x="600" y="504" width="59" height="32"/>
                                 <buttonCell key="cell" type="push" title="保存" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DaT-2I-Gsi">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -270,7 +262,7 @@
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BnC-21-qbF">
-                                <rect key="frame" x="308" y="514" width="61" height="18"/>
+                                <rect key="frame" x="347" y="513" width="61" height="18"/>
                                 <buttonCell key="cell" type="check" title="获取" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="SBD-Ka-NNe">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -280,7 +272,7 @@
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LW8-PO-YsV">
-                                <rect key="frame" x="373" y="514" width="74" height="18"/>
+                                <rect key="frame" x="400" y="513" width="74" height="18"/>
                                 <buttonCell key="cell" type="check" title="Coding" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6ei-Te-kZM">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -300,10 +292,10 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="minSize" width="423" height="458"/>
-                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <size key="maxSize" width="564" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <size key="minSize" width="423" height="458"/>
-                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <size key="maxSize" width="564" height="10000000"/>
                                         </textView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -317,11 +309,30 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-ci-S98">
+                                <rect key="frame" x="18" y="482" width="370" height="23"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Item.h" id="HXj-sV-GUl">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dHz-K4-fgw">
+                                <rect key="frame" x="290" y="514" width="56" height="18"/>
+                                <buttonCell key="cell" type="check" title="基类" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DbQ-Th-chq">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCheckClick:" target="rPt-NT-nkU" id="djI-OC-nJp"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="aComboBox" destination="ZnH-nl-s1V" id="Hke-Hc-aPf"/>
                         <outlet property="addButton" destination="v3j-ai-jq0" id="npX-kG-O1b"/>
+                        <outlet property="baseClassButton" destination="dHz-K4-fgw" id="OTU-6e-MNS"/>
                         <outlet property="checkButon" destination="BnC-21-qbF" id="qer-YB-0bv"/>
                         <outlet property="codingButton" destination="LW8-PO-YsV" id="f87-VQ-vkZ"/>
                         <outlet property="contentHTextField" destination="3Z1-Hy-tGL" id="5OB-1b-1Pl"/>
@@ -338,7 +349,7 @@
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="kHB-TJ-lI7"/>
             </objects>
-            <point key="canvasLocation" x="318.5" y="861"/>
+            <point key="canvasLocation" x="-182.5" y="981"/>
         </scene>
     </scenes>
 </document>

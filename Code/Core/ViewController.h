@@ -25,6 +25,7 @@
 
 @property (nonatomic, weak)  IBOutlet NSButton *checkButon;//是否添加获取数据方法
 @property (nonatomic, weak)  IBOutlet NSButton *codingButton;//是否coding
+@property (nonatomic, weak)  IBOutlet NSButton *baseClassButton;//是否为基类
 
 - (IBAction)onAddClick:(id)sender;//增加
 - (IBAction)onGenerateClick:(id)sender;//生成
