@@ -459,13 +459,17 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
             [self.urlItems addObject:parameter];
         }
         
-        if ([attribute isEqualToString:@"NSURL"] || [attribute isEqualToString:@"NSString"] || [attribute isEqualToString:@"NSArray"] || [attribute isEqualToString:@"NSDictionary"] || [attribute isEqualToString:@"NSNumber"] || [attribute isEqualToString:@"NSObject"]) {
-            contentH = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ *%@;",attribute,parameter];
+        if ([attribute isEqualToString:@"NSURL"] || [attribute isEqualToString:@"NSArray"] || [attribute isEqualToString:@"NSDictionary"] || [attribute isEqualToString:@"NSNumber"] || [attribute isEqualToString:@"NSObject"]) {
+            contentH = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ *%@;/**<解释*/",attribute,parameter];
             
         }
         
+        if ([attribute isEqualToString:@"NSString"]) {
+            contentH = [NSString stringWithFormat:@"@property (nonatomic, copy) %@ %@;/**<解释*/",attribute,parameter];
+        }
+        
         if ([attribute isEqualToString:@"id"]) {
-            contentH = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ %@;",attribute,parameter];
+            contentH = [NSString stringWithFormat:@"@property (nonatomic, strong) %@ %@;/**<解释*/",attribute,parameter];
         }
         
         if ([attribute isEqualToString:@"NSTimeInterval"]) {
@@ -473,7 +477,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         }
         
         if ([attribute isEqualToString:@"BOOL"] || [attribute isEqualToString:@"NSInteger"] || [attribute isEqualToString:@"double"] || [attribute isEqualToString:@"float"] || [attribute isEqualToString:@"NSUInteger"] || [attribute isEqualToString:@"NSTimeInterval"]) {
-            contentH = [NSString stringWithFormat:@"@property (nonatomic, assign) %@ %@;",attribute,parameter];
+            contentH = [NSString stringWithFormat:@"@property (nonatomic, assign) %@ %@;/**<解释*/",attribute,parameter];
         }
         
         contentM = [NSString stringWithFormat:@"@synthesize %@;",parameter];
