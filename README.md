@@ -1,6 +1,8 @@
 # Model
 #编辑model类工具 只能在mac上使用
 
+[@田家顺](tjs101@live.cn)
+
 ###类似如下所示:
 ######//
 ######//    TJSModel.h
