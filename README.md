@@ -1,99 +1,101 @@
 # Model
-编辑model类工具 只能在mac上使用
+#编辑model类工具 只能在mac上使用
 
-类似如下所示:
-//
-//    TJSModel.h
-//    Quentin
-//
-//    Created by quentin on 15-05-13
-//    Copyright (c) 2015年 tianjiashun. All rights reserved.
-//
+###类似如下所示:
+######//
+######//    TJSModel.h
+######//    Quentin
+######//
+######//    Created by quentin on 15-05-13
+######//    Copyright (c) 2015年 tianjiashun. All rights reserved.
+######//
 
-#import <Foundation/Foundation.h>
+#######import <Foundation/Foundation.h>
 
 @interface TJSModel : NSObject <NSCoding>
 
-@property (nonatomic, strong) NSNumber *userId;
+    @property (nonatomic, strong) NSNumber *userId;
 
-- (void)updateDataFromDictionary:(NSDictionary *)dict;
+    - (void)updateDataFromDictionary:(NSDictionary *)dict;
 
-@end
+    @end
 
 
-//
-//    TJSModel.m
-//    Quentin
-//
-//    Created by quentin on 15-05-13
-//    Copyright (c) 2015年 tianjiashun. All rights reserved.
-//
+######//
+######//    TJSModel.m
+######//    Quentin
+######//
+######//    Created by quentin on 15-05-13
+######//    Copyright (c) 2015年 tianjiashun. All rights reserved.
+######//
 
-#import "TJSModel.h"
+#######import "TJSModel.h"
 
-@implementation TJSModel
+    @implementation TJSModel
 
-@synthesize userId;
+    @synthesize userId;
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-if (self = [super init]) {
-self.userId = [aDecoder decodeObjectForKey:@"userId"];
-}
-return self;
-}
+    - (id)initWithCoder:(NSCoder *)aDecoder
+    {
+        if (self = [super init]) {
+            self.userId = [aDecoder decodeObjectForKey:@"userId"];
+        }
+        return self;
+    }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-[aCoder encodeObject:self.userId forKey:@"userId"];
-}
+    - (void)encodeWithCoder:(NSCoder *)aCoder
+    {
+        [aCoder encodeObject:self.userId forKey:@"userId"];
+    }
 
-- (void)updateDataFromDictionary:(NSDictionary *)dict
-{
-[self setValuesForKeysWithDictionary:dict];
-}
+    - (void)updateDataFromDictionary:(NSDictionary *)dict
+    {
+        [self setValuesForKeysWithDictionary:dict];
+    }
 
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-[super setValue:value forKey:key];
-}
+    - (void)setValue:(id)value forKey:(NSString *)key
+    {
+        [super setValue:value forKey:key];
+    }
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-NSLog(@"%s中不存在%@键值",__FILE__,key);
-}
+    - (void)setValue:(id)value forUndefinedKey:(NSString *)key
+    {
+        NSLog(@"%s中不存在%@键值",__FILE__,key);
+    }
 
-- (void)setNilValueForKey:(NSString *)key
-{
-NSLog(@"%@值为空",key);
-}
+    - (void)setNilValueForKey:(NSString *)key
+    {
+         NSLog(@"%@值为空",key);
+    }
 
-- (NSDictionary *)properties            
-{                
-NSMutableDictionary *dict = [NSMutableDictionary dictionary];                
+    - (NSDictionary *)properties            
+    { 
 
-unsigned int count;                
+         NSMutableDictionary *dict = [NSMutableDictionary dictionary];                
 
-objc_property_t *properties = class_copyPropertyList([self class], &count);                
+        unsigned int count;                
 
-for (int index = 0; index < count; index ++) {                
+        objc_property_t *properties = class_copyPropertyList([self class], &count);                
 
-objc_property_t property = properties[index];                
-const char *char_name = property_getName(property);//获取属性名                
-NSString *propertyName = [NSString stringWithUTF8String:char_name];                
+        for (int index = 0; index < count; index ++) {                
 
-id propertyValue = [self valueForKey:propertyName];//属性值                
-if (propertyValue) {                
-[dict setObject:propertyValue forKey:propertyName];                
-}                
-}                
-free(properties);                                
-return dict;            
-}            
+            objc_property_t property = properties[index];                
+            const char *char_name = property_getName(property);//获取属性名                
+            NSString *propertyName = [NSString stringWithUTF8String:char_name];                
 
-- (NSString *)description            
-{            
-return [[self properties] description];            
-}
+            id propertyValue = [self valueForKey:propertyName];//属性值                
+            if (propertyValue) {                
+                [dict setObject:propertyValue forKey:propertyName];                
+            }                
+        }                
+        free(properties);                                
+    return dict;            
+    }            
 
-@end
+    - (NSString *)description            
+    {            
+        return [[self properties] description];            
+    }
+
+    @end
+
