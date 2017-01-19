@@ -1,7 +1,7 @@
 # Model
 #编辑model类工具 只能在mac上使用
 
-[@田家顺](tjs101@live.cn)
+[@田家顺](https://github.com/tjs101)
 
 ###类似如下所示:
 ######//
