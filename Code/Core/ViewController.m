@@ -175,6 +175,16 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
     [self.timeItems removeAllObjects];
 }
 
+#pragma mark - window
+
+- (IBAction)showHelp:(id)sender
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"本软件支持自动化生成Model类"];
+    [alert addButtonWithTitle:@"确定"];
+    [alert beginSheetModalForWindow:self.view.window completionHandler:NULL];
+}
+
 #pragma mark - on click
 //重置
 - (IBAction)onResetClick:(id)sender
