@@ -11,13 +11,14 @@
 #import "CRHistoryViewController.h"
 #import "FileItem.h"
 #import "PathManager.h"
+#import "TransJsonViewController.h"
 
 #define kDefaultFileName @"TJSModel"
 
 NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotification";
 
 
-@interface ViewController ()
+@interface ViewController ()<TransJsonDelegate>
 
 {
     NSString *_parameterHStr;
@@ -465,7 +466,7 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         }
         
         if ([attribute isEqualToString:@"NSString"]) {
-            contentH = [NSString stringWithFormat:@"@property (nonatomic, copy) %@ %@;/**<解释*/",attribute,parameter];
+            contentH = [NSString stringWithFormat:@"@property (nonatomic, copy) %@ *%@;/**<解释*/",attribute,parameter];
         }
         
         if ([attribute isEqualToString:@"id"]) {
@@ -676,5 +677,60 @@ NSString  *const ChangeDataFinishedNotification = @"ChangeDataFinishedNotificati
         
     }
 }
+
+- (IBAction)onClickTransJsonStr:(id)sender {
+    TransJsonViewController *ctrl = [[TransJsonViewController alloc] init];
+    ctrl.delegate = self;
+    [self presentViewControllerAsModalWindow:ctrl];
+}
+
+- (void)transJsonStr:(NSString *)jsonStr {
+    [self resetData];
+    
+    NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err = nil;
+    id value = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+    if (err || ![NSJSONSerialization isValidJSONObject:value]) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"不合法的JSON字符串!";
+        [alert addButtonWithTitle:@"OK"];
+        [alert runModal];
+    }
+    
+    if ([value isKindOfClass:[NSDictionary class]]) {//最外层为dict类型，可以转换Model
+        NSDictionary *dict = (NSDictionary *)value;
+        
+        [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            NSString *typeStr = nil;
+            NSString *paramStr = nil;
+            
+            if ([obj isKindOfClass:[NSNumber class]]) {
+                typeStr = @"NSNumber";
+            } else if ([obj isKindOfClass:[NSArray class]]) {
+                typeStr = @"NSArray";
+            } else if ([obj isKindOfClass:[NSDictionary class]]) {
+                typeStr = @"NSDictionary";
+            } else if ([obj isKindOfClass:[NSString class]]) {
+                typeStr = @"NSString";
+            }
+            paramStr = (NSString *)key;
+            
+            [self.typeItems addObject:typeStr];
+            [self.parameterItems addObject:paramStr];
+            
+        }];
+        
+        NSArray *aTypeItems = [NSArray arrayWithArray:self.typeItems];
+        NSArray *aParameterItems = [NSArray arrayWithArray:self.parameterItems];
+        
+        [self editContentWithType:aTypeItems parameterItems:aParameterItems];
+        
+    } else if ([value isKindOfClass:[NSArray class]]) {//最外层为数组类型，不支持转换
+        
+    }
+    
+}
+
 
 @end

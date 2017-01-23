@@ -21,6 +21,8 @@
 		944B655C1AB81FC80060AC17 /* CRHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 944B655A1AB81FC80060AC17 /* CRHistoryViewController.xib */; };
 		944B655F1AB824480060AC17 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B655E1AB824480060AC17 /* NSString+Util.m */; };
 		9456FE9E1AB90E4100C1A2B1 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 9456FE9D1AB90E4100C1A2B1 /* README */; };
+		E8EB827D1E35ECAA00D39C26 /* TransJsonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EB827B1E35ECAA00D39C26 /* TransJsonViewController.m */; };
+		E8EB827E1E35ECAA00D39C26 /* TransJsonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8EB827C1E35ECAA00D39C26 /* TransJsonViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,9 @@
 		944B655E1AB824480060AC17 /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		944B65601AB828AE0060AC17 /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		9456FE9D1AB90E4100C1A2B1 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		E8EB827A1E35ECAA00D39C26 /* TransJsonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransJsonViewController.h; sourceTree = "<group>"; };
+		E8EB827B1E35ECAA00D39C26 /* TransJsonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransJsonViewController.m; sourceTree = "<group>"; };
+		E8EB827C1E35ECAA00D39C26 /* TransJsonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransJsonViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +118,9 @@
 				944B65581AB81FC80060AC17 /* CRHistoryViewController.h */,
 				944B65591AB81FC80060AC17 /* CRHistoryViewController.m */,
 				944B655A1AB81FC80060AC17 /* CRHistoryViewController.xib */,
+				E8EB827A1E35ECAA00D39C26 /* TransJsonViewController.h */,
+				E8EB827B1E35ECAA00D39C26 /* TransJsonViewController.m */,
+				E8EB827C1E35ECAA00D39C26 /* TransJsonViewController.xib */,
 				944B65601AB828AE0060AC17 /* Config.h */,
 				941DA3A31AB2DC8D004F127F /* Images.xcassets */,
 				941DA3A51AB2DC8D004F127F /* Main.storyboard */,
@@ -217,7 +225,7 @@
 				TargetAttributes = {
 					941DA3951AB2DC8D004F127F = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 4J67FTSTQJ;
+						DevelopmentTeam = 3PHL3Y9U2S;
 						ProvisioningStyle = Automatic;
 					};
 					941DA3AB1AB2DC8D004F127F = {
@@ -253,6 +261,7 @@
 				9456FE9E1AB90E4100C1A2B1 /* README in Resources */,
 				944B65491AB7F6080060AC17 /* CRAlertViewController.xib in Resources */,
 				941DA3A41AB2DC8D004F127F /* Images.xcassets in Resources */,
+				E8EB827E1E35ECAA00D39C26 /* TransJsonViewController.xib in Resources */,
 				944B655C1AB81FC80060AC17 /* CRHistoryViewController.xib in Resources */,
 				941DA3A71AB2DC8D004F127F /* Main.storyboard in Resources */,
 			);
@@ -276,6 +285,7 @@
 				941DA3A21AB2DC8D004F127F /* ViewController.m in Sources */,
 				944B655B1AB81FC80060AC17 /* CRHistoryViewController.m in Sources */,
 				944B655F1AB824480060AC17 /* NSString+Util.m in Sources */,
+				E8EB827D1E35ECAA00D39C26 /* TransJsonViewController.m in Sources */,
 				944B65541AB818C60060AC17 /* PathManager.m in Sources */,
 				941DA39F1AB2DC8D004F127F /* main.m in Sources */,
 				944B65481AB7F6080060AC17 /* CRAlertViewController.m in Sources */,
@@ -395,7 +405,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 4J67FTSTQJ;
+				DEVELOPMENT_TEAM = 3PHL3Y9U2S;
 				INFOPLIST_FILE = Core/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -409,7 +419,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 4J67FTSTQJ;
+				DEVELOPMENT_TEAM = 3PHL3Y9U2S;
 				INFOPLIST_FILE = Core/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;

@@ -27,6 +27,10 @@
 @property (nonatomic, weak)  IBOutlet NSButton *codingButton;//是否coding
 @property (nonatomic, weak)  IBOutlet NSButton *baseClassButton;//是否为基类
 
+@property (nonatomic, weak) IBOutlet NSButton *jsonTransButton;//传入Json字符串直接生成Model
+
+
+
 - (IBAction)onAddClick:(id)sender;//增加
 - (IBAction)onGenerateClick:(id)sender;//生成
 - (IBAction)onResetClick:(id)sender;//重置
@@ -37,6 +41,9 @@
 - (IBAction)onHistoryClick:(id)sender;//历史
 
 - (IBAction)onCheckClick:(id)sender;//选择
+
+- (IBAction)onClickTransJsonStr:(id)sender;//直接转换Json
+
 
 @end
 
