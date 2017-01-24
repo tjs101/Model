@@ -34,7 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		66BA71181E309B3900D23493 /* Core.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Core.entitlements; sourceTree = "<group>"; };
+		66DA537F1E36FFD300C8AB22 /* Core.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Core.entitlements; sourceTree = "<group>"; };
 		941DA3961AB2DC8D004F127F /* Core.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Core.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		941DA39A1AB2DC8D004F127F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		941DA39B1AB2DC8D004F127F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		941DA3981AB2DC8D004F127F /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				66BA71181E309B3900D23493 /* Core.entitlements */,
+				66DA537F1E36FFD300C8AB22 /* Core.entitlements */,
 				944B65511AB818B40060AC17 /* Util */,
 				944B65501AB817FB0060AC17 /* Model */,
 				941DA39B1AB2DC8D004F127F /* AppDelegate.h */,
@@ -407,6 +407,7 @@
 				INFOPLIST_FILE = Core/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quentin.Core;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -422,7 +423,9 @@
 				INFOPLIST_FILE = Core/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quentin.Core;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
