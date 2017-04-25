@@ -4,7 +4,7 @@
 [@田家顺](https://github.com/tjs101)
 
 ###类似如下所示:
-######
+
 ######//
 ######//    TJSModel.h
 ######//    Quentin
@@ -13,15 +13,15 @@
 ######//    Copyright (c) 2015年 tianjiashun. All rights reserved.
 ######//
 
-#######import <Foundation/Foundation.h>
+import <Foundation/Foundation.h>
 
 @interface TJSModel : NSObject <NSCoding>
 
-    @property (nonatomic, strong) NSNumber *userId;
+@property (nonatomic, strong) NSNumber *userId;
 
-    - (void)updateDataFromDictionary:(NSDictionary *)dict;
+- (void)updateDataFromDictionary:(NSDictionary *)dict;
 
-    @end
+@end
 
 
 ######//
